@@ -11,7 +11,7 @@
 <!--<h3 id="app-title">Haroma (Ha<font color="gray">ngul </font>Aroma)</h3>-->
 <div id="display-container">
 	<label for="display" style="display:block;margin:6px 0;font-size:14px;">원문</label>
-	<textarea id="display" placeholder="여기에 원문을 직접 입력하세요" readonly></textarea>
+	<textarea id="display" placeholder="여기에 원문을 직접 입력하세요"></textarea>
 </div>
 <div id="keyboard-container">
     <div class="layer active" data-layer="KR">
@@ -240,6 +240,11 @@
 				<button id="position-down">↓</button>
                 <button id="position-up">↑</button>
             </div>
+			<div class="control-group">
+                <label>RotateR-RotateL</label>
+				<button id="rotate-left">↺</button>
+                <button id="rotate-right">↻</button>
+            </div>
         </div>
     </div>
 </div>
@@ -263,19 +268,17 @@
 </div>
 <script src="script.js"></script>
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(registration => {
-          console.log('Service Worker registered: ', registration);
-        })
-        .catch(registrationError => {
-          console.log('Service Worker registration failed: ', registrationError);
-        });
-    });
-  }
-
-
+	/*if ('serviceWorker' in navigator) {
+		window.addEventListener('load', () => {
+			navigator.serviceWorker.register('sw.js')
+			.then(registration => {
+			console.log('Service Worker registered: ', registration);
+			})
+			.catch(registrationError => {
+			console.log('Service Worker registration failed: ', registrationError);
+			});
+		});
+	}*/
 
 <!-- === Haroma: 무암호(HAROMA0) 간편 모드 + 기본 키보드 차단 패치 === -->
 <!-- 1) 기본 키보드 차단: display textarea를 readonly + inputmode=none -->
