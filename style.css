@@ -1,0 +1,213 @@
+body {
+  display: flex;
+  flex-direction: column; /* 가로 → 세로 정렬 */
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f5f5f5;
+  font-family: arial;  
+  padding-bottom: 100px;  /* 컨트롤 버튼이 다른 콘텐츠를 가리지 않도록 body에 하단 여백 추가 */
+}
+
+:root {
+  --key-center-color: #77aa77; /* 중앙 키 색상과 동일하게 설정 */
+}
+
+.layer {           /* 레이어(NUM,SYM,EN,KR) 숨김/표시 */
+  display: none;
+}
+.layer.active {    /* 활성 레이어 */
+  display: block;
+}
+
+/*
+#layer-switcher {
+  position: fixed;    layer-switcher를 화면 하단에 고정 
+  bottom: 2px; /* 화면 하단에서의 여백 
+  left: 50%;
+  transform: translateX(-50%); /* 수평 중앙 정렬 
+  width: 320px;     /* 전체 컨테이너 너비 지정 
+  display: flex;
+  flex-direction: column; /* 자식 요소(줄)들을 세로로 정렬 
+  align-items: center;   /* 가운데 정렬 
+  gap: 2px;             /* 줄 사이의 간격 
+  padding: 2px;  
+  background-color: #f5f5f5; /* 배경색 추가 
+  border-radius: 5px; /* 모서리를 둥글게 
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* 그림자 효과 
+}*/
+
+/* 버튼 패널을 화면 최상단 레이어로 */
+  #layer-switcher {
+    position: fixed;
+    left: 8px;
+    bottom: 8px;
+    z-index: 10000;   /* 키보드 SVG보다 위 */
+    pointer-events: auto;
+  }
+  
+.button-row {
+  width: 100%;  /* 부모 요소의 전체 너비를 차지 */
+  display: flex;
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-right: 2px;  
+  justify-content: space-around; /* space-between; 버튼들을 좌우로 균등하게 배분 */
+}
+
+#layer-switcher button {
+  background: #e0e0e0;
+  border: 1px solid #aaa;
+  padding: 1px 1px;  
+  flex-grow: 1;     /* 버튼들이 가로 공간을 채우도록 함 */
+  margin: 0px 2px;  /* margin: 0px;  균등 배분을 위해 제거하거나 0으로 설정 */
+  cursor: pointer;
+}
+
+#layer-switcher button.active {
+  background-color: var(--key-center-color);  /* 녹색 (#77aa77) */
+  border-color: var(--key-center-color);
+  color: #fff;
+}
+
+#layer-switcher button.caps-on {   /* EN 버튼이 Caps Lock 상태일 때 적용될 스타일 */
+  background-color: #4a90e2;      /* 파란색으로 변경 */
+  border-color: #4a90e2;
+  color: white;
+}
+
+#display-container {     
+  width: 320px;
+  height: 200px;
+}
+
+#display {      /* 글자 표시창 */
+  width: 97%;
+  height: 100%;
+  font-size: 18px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+#haromaInput[readonly] {
+  caret-color: transparent; /* 커서 깜빡임 제거 */
+}
+
+/*
+#keyboard-container {
+  display: block;
+  bottom: 115px; /* 기능 버튼 높이(85px) + 기능 버튼 하단 여백(10px) + 추가 여백(20px) = 115px 
+  left: 50%;
+  margin-bottom: 2px;
+  transform-origin: bottom;   /* transform-origin을 'bottom'으로 변경하여 중앙에서 확대/축소되도록 함 
+  transition: transform 0.1s ease-in-out;  
+  position: relative;      /* 위치 이동을 위해 position 속성 추가 
+  touch-action: none;
+  user-select: none;
+}*/
+
+ #keyboard-container {
+    position: fixed;
+    bottom: 115px;  /* 기능 버튼 높이+여백 */
+    left: 50%;
+	top: 300px;
+    transform: translateX(-50%);
+    z-index: 9000;
+    pointer-events: auto;
+  }
+
+.layer svg { touch-action: none; user-select: none; }
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+.keyboard {    /* 입력용 키보드 */
+    width: 300px;
+    height: 300px;
+    border-radius: 2px;
+}
+
+button {     /* 숫자,기호,영어,한글... 좌,우,Clear 버튼 */
+  width: 55px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.octagon-center {
+  fill: #6cbf72; 
+  stroke: #144455; 
+  stroke-width: 0.5;
+}
+
+.octagon-small1, .octagon-small2, .octagon-small3, .octagon-small4, 
+.octagon-small5, .octagon-small6, .octagon-small7, .octagon-small8 {
+  fill: #84cc86; 
+  stroke: #144455; 
+  stroke-width: 0.5;
+}
+
+.octagon-big1, .octagon-big2, .octagon-big3, .octagon-big4, 
+.octagon-big5, .octagon-big6, .octagon-big7, .octagon-big8 {
+  fill: #a3dfaa;  
+  stroke: #144455;  
+  stroke-width: 0.5;
+}
+
+/* Settings Modal Styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; 
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+} 
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.settings-controls .control-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.settings-controls label {
+    flex-basis: 30%;
+    text-align: center;
+}
+
+.settings-controls button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+}
